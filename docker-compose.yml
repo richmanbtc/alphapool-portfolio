@@ -1,0 +1,23 @@
+version: "3"
+services:
+  portfolio:
+    build:
+      context: .
+    volumes:
+      - ./:/app:ro
+    working_dir: /app
+    environment:
+      ALPHAPOOL_DATABASE_URL: 'postgresql://postgres:postgres@host.docker.internal/alphapool'
+      ALPHAPOOL_LOG_LEVEL: ${ALPHASEA_LOG_LEVEL:-debug}
+      ALPHAPOOL_EXECUTION_COST: ${ALPHAPOOL_EXECUTION_COST:-0.001}
+      ALPHAPOOL_OPTIMIZATION_DAYS: ${ALPHAPOOL_OPTIMIZATION_DAYS:-60}
+      ALPHAPOOL_SCORE_THRESHOLD: 0.5
+      ALPHAPOOL_INTERVAL: 300
+      ALPHAPOOL_PORTFOLIO: ${ALPHAPOOL_PORTFOLIO:-max_sprt}
+      ALPHAPOOL_MODEL_ID: ${ALPHAPOOL_MODEL_ID:-portfolio:model1}
+    command: ['python', '-m', 'src.main']
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "32m"
