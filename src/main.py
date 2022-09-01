@@ -64,7 +64,7 @@ def job(dry=False):
             tournament=tournament,
             model_id=model_id,
             timestamp=int(execution_time.timestamp()),
-            weights=df_weights.to_dict(),
+            weights=df_weights['weight'].to_dict(),
         )
     logger.info("job finished")
 
