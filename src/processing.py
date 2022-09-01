@@ -31,7 +31,7 @@ def preprocess_df(df, execution_time):
 
 
 def remove_portfolio_models(df):
-    return df.loc[~df.index.get_level_values("model_id").str.startswith("portfolio:")]
+    return df.loc[~df.index.get_level_values("model_id").str.startswith("pf-")]
 
 
 def remove_inactive_models(df, min_timestamp):

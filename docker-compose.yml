@@ -14,7 +14,7 @@ services:
       ALPHAPOOL_SCORE_THRESHOLD: 0.5
       ALPHAPOOL_INTERVAL: 300
       ALPHAPOOL_PORTFOLIO: ${ALPHAPOOL_PORTFOLIO:-max_sprt}
-      ALPHAPOOL_MODEL_ID: ${ALPHAPOOL_MODEL_ID:-portfolio:model1}
+      ALPHAPOOL_MODEL_ID: ${ALPHAPOOL_MODEL_ID:-pf-model1}
     command: ['python', '-m', 'src.main']
     restart: always
     logging:
