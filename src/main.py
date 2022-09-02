@@ -24,7 +24,7 @@ def job(dry=False):
     tournament = "crypto"
 
     logger.info("job started")
-    execution_time = math.floor(time.time() / interval) * interval
+    execution_time = math.ceil(time.time() / interval) * interval
     execution_time = pd.to_datetime(execution_time, unit="s", utc=True)
     logger.info("execution_time {}".format(execution_time))
 
