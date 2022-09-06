@@ -10,6 +10,7 @@ from .market_data_store.market_data_store import MarketDataStore
 from .logger import create_logger
 from .portfolios.equal_weight import EqualWeight
 from .portfolios.universal import Universal
+from .portfolios.universal2 import Universal2
 from .processing import preprocess_df, calc_model_ret
 
 log_level = os.getenv("ALPHAPOOL_LOG_LEVEL")
@@ -18,6 +19,7 @@ logger = create_logger(log_level)
 
 @retry(tries=3, delay=3)
 def job(dry=False):
+    portfolio_type = os.getenv("ALPHAPOOL_PORTFOLIO", "universal")
     optimization_days = int(os.getenv("ALPHAPOOL_OPTIMIZATION_DAYS"))
     model_id = os.getenv("ALPHAPOOL_MODEL_ID")
     interval = 5 * 60
@@ -54,8 +56,15 @@ def job(dry=False):
     df_model_ret = calc_model_ret(df).dropna()
     logger.debug(df_model_ret)
 
-    # portfolio = EqualWeight()
-    portfolio = Universal()
+    if portfolio_type == 'universal':
+        portfolio = Universal()
+    elif portfolio_type == 'universal2':
+        portfolio = Universal2()
+    elif portfolio_type == 'equal_weight':
+        portfolio = EqualWeight()
+    else:
+        raise Exception('unknown portfolio {}'.format(portfolio_type))
+
     df_weights = portfolio.get_weights(df_model_ret)
     logger.debug(df_weights)
 
