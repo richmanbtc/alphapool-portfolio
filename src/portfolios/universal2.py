@@ -3,12 +3,12 @@ import pandas as pd
 
 
 class Universal2:
-    def __init__(self):
-        pass
+    def __init__(self, max_leverage=5):
+        self.max_leverage = max_leverage
 
     def get_weights(self, df):
         weight_count = 10000
-        max_leverage = 5
+        max_leverage = self.max_leverage
         min_return = 0.01
 
         model_ids = df.columns

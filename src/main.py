@@ -21,6 +21,7 @@ logger = create_logger(log_level)
 def job(dry=False):
     portfolio_type = os.getenv("ALPHAPOOL_PORTFOLIO", "universal")
     optimization_days = int(os.getenv("ALPHAPOOL_OPTIMIZATION_DAYS"))
+    max_leverage = float(os.getenv("ALPHAPOOL_MAX_LEVERAGE"))
     model_id = os.getenv("ALPHAPOOL_MODEL_ID")
     interval = 5 * 60
     tournament = "crypto"
@@ -59,7 +60,7 @@ def job(dry=False):
     if portfolio_type == 'universal':
         portfolio = Universal()
     elif portfolio_type == 'universal2':
-        portfolio = Universal2()
+        portfolio = Universal2(max_leverage=max_leverage)
     elif portfolio_type == 'equal_weight':
         portfolio = EqualWeight()
     else:
