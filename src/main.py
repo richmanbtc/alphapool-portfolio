@@ -1,4 +1,5 @@
 import math
+import json
 import os
 import time
 import pandas as pd
@@ -23,6 +24,7 @@ def job(dry=False):
     optimization_days = int(os.getenv("ALPHAPOOL_OPTIMIZATION_DAYS"))
     max_leverage = float(os.getenv("ALPHAPOOL_MAX_LEVERAGE"))
     model_id = os.getenv("ALPHAPOOL_MODEL_ID")
+    excluded_model_ids = json.loads(os.getenv("ALPHAPOOL_EXCLUDED_MODEL_IDS", '[]'))
     interval = 5 * 60
     tournament = "crypto"
 
@@ -44,6 +46,7 @@ def job(dry=False):
     client = Client(db)
 
     df = client.get_positions(tournament="crypto")
+    df = df.loc[~df.index.get_level_values('model_id').isin(excluded_model_ids)]
     df = preprocess_df(df, execution_time)
     logger.debug(df)
 
