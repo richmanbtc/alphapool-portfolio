@@ -82,4 +82,6 @@ def job(dry=False):
     logger.info("job finished")
 
 
+raise Exception('this will not work until main.py is modified to work with new alphapool lib')
+
 job()
