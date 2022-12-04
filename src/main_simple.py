@@ -51,9 +51,7 @@ def job(dry=False):
     if len(symbol_whitelist) > 0:
         df = remove_out_of_universe_models(df, execution_time - pd.to_timedelta(1, unit="D"), symbols=symbol_whitelist)
         logger.info('out of universe model removed')
-    if exchange is not None:
-        df = select_exchange_models(df, exchange)
-        logger.info('exchange model selected')
+    df = select_exchange_models(df, exchange)
     logger.debug('preprocessed')
     logger.debug(df)
 
