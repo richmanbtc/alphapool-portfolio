@@ -11,7 +11,8 @@ RUN pip install --no-cache-dir \
     dataset==1.5.2 \
     psycopg2==2.9.3 \
     retry==0.9.2 \
-    universal-portfolios
+    numpy==1.23.3 \
+    pandas==1.5.2
 
 ADD . /app
 ENV ALPHAPOOL_LOG_LEVEL=debug \
