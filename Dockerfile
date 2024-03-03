@@ -2,7 +2,7 @@ FROM python:3.10.6
 
 RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir \
-    ccxt==1.57.43 \
+    ccxt==4.2.58 \
     "git+https://github.com/richmanbtc/ccxt_rate_limiter.git@v0.0.6#egg=ccxt_rate_limiter" \
     "git+https://github.com/richmanbtc/crypto_data_fetcher.git@v0.0.18#egg=crypto_data_fetcher" \
     cvxpy==1.2.1 \
