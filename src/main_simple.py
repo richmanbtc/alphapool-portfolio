@@ -22,7 +22,7 @@ def job(dry=False):
     max_leverage = float(os.getenv("ALPHAPOOL_MAX_LEVERAGE"))
     model_id = os.getenv("ALPHAPOOL_MODEL_ID")
     exchange = os.getenv("ALPHAPOOL_EXCHANGE")
-    model_id_regex = json.loads(os.getenv("ALPHAPOOL_MODEL_ID_REGEX", '.*'))
+    model_id_regex = os.getenv("ALPHAPOOL_MODEL_ID_REGEX", '.*')
     symbol_whitelist = json.loads(os.getenv("ALPHAPOOL_SYMBOLS", '[]'))
     interval = 5 * 60
 
