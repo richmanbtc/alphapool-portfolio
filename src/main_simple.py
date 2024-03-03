@@ -22,7 +22,7 @@ def job(dry=False):
     max_leverage = float(os.getenv("ALPHAPOOL_MAX_LEVERAGE"))
     model_id = os.getenv("ALPHAPOOL_MODEL_ID")
     exchange = os.getenv("ALPHAPOOL_EXCHANGE")
-    excluded_model_ids = json.loads(os.getenv("ALPHAPOOL_EXCLUDED_MODEL_IDS", '[]'))
+    model_id_regex = json.loads(os.getenv("ALPHAPOOL_MODEL_ID_REGEX", '.*'))
     symbol_whitelist = json.loads(os.getenv("ALPHAPOOL_SYMBOLS", '[]'))
     interval = 5 * 60
 
@@ -30,7 +30,7 @@ def job(dry=False):
     logger.info('max_leverage {}'.format(max_leverage))
     logger.info('model_id {}'.format(model_id))
     logger.info('exchange {}'.format(exchange))
-    logger.info('excluded_model_ids {}'.format(excluded_model_ids))
+    logger.info('model_id_regex {}'.format(model_id_regex))
     logger.info('symbol_whitelist {}'.format(symbol_whitelist))
     logger.info('interval {}'.format(interval))
 
@@ -43,7 +43,7 @@ def job(dry=False):
     client = Client(db)
 
     df = client.get_positions((execution_time - pd.to_timedelta(1, unit="D")).timestamp())
-    df = df.loc[~df.index.get_level_values('model_id').isin(excluded_model_ids)]
+    df = df.loc[df.index.get_level_values('model_id').str.fullmatch(model_id_regex)]
     logger.debug('raw')
     logger.debug(df)
 
